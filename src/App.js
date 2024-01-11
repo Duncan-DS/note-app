@@ -1,6 +1,30 @@
 import React from "react";
 import "./App.css";
 
+// (Grouped by the following:
+//   A create note-block function
+//   A delete note-block function
+//   An auto-save to localStorage function)
+
+// constants
+
+
+// a note-block creation function:
+function createNote() {
+
+}
+
+// a note-block deletion function
+function deleteNote() {
+
+}
+
+// local-storage autosave function
+function saveStorage(){
+
+}
+
+
 let notes = document.querySelectorAll(".input-box");
 const createBtn = document.querySelector(".btn");
 const notesContainer = document.querySelector(".notes-container");
