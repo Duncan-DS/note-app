@@ -4,70 +4,62 @@ import "./App.css";
 // (Grouped by the following:
 //   A create note-block function
 //   A delete note-block function
-//   An auto-save to localStorage function)
+//   A localStorage function
+//   A updated page funtion
+//   A save funtion
+//   Other features
 
 // constants
-
+let notes = document.querySelectorAll(".input-box");
+const notesContainer = document.querySelector('notes-container')
 
 // a note-block creation function:
 function createNote() {
-
+  let inputBox = document.createElement('p');
+  inputBox.className = 'input-box';
+  inputBox.setAttribute('contenteditable', 'true');
+  let img = document.createElement('img');
+  img.src = 'IMG/delete.png';
 }
 
 // a note-block deletion function
 function deleteNote() {
-
+  
 }
 
-// local-storage autosave function
+// local-storage  function
 function saveStorage(){
-
+  localStorage.setItem('container', notesContainer.innerHTML)
 }
 
-
-let notes = document.querySelectorAll(".input-box");
-const createBtn = document.querySelector(".btn");
-const notesContainer = document.querySelector(".notes-container");
-
-function showNotes(){
-  notesContainer.innerHTML = localStorage.getItem("notes");
+// updated page with notes funtion
+function showNotes() {
+  notesContainer.innerHTML = localStorage.getItem('container')
 }
 showNotes()
 
-function updateStorage(){
-  localStorage.setItem("notes", notesContainer.innerHTML)
-}
-
- createBtn.addEventListener("click", ()=>{
-  let inputBox = document.createElement("p");
-  let img = document.createElement("img");
-  inputBox.className = "input-box";
-  inputBox.setAttribute("contenteditable", "true"); 
-  img.src = "IMG/delete.png";
-  notesContainer.appendChild(inputBox).appendChild(img);
-})
-
- notesContainer.addEventListener("click", function(e){
-  if(e.target.tagName === "img"){
+// save function
+function saveNotes(e) {
+  if (e.target.tagnName === 'img'){
     e.target.parentElement.remove();
-    updateStorage();
+    saveStorage()
   }
-  else if (e.target.tagName === 'p'){
-    notes = document.querySelector(".input-box");
+  else if (e.target.tagnName === 'p'){
+    notes = document.querySelector('.input-box');
     notes.forEach(nt => {
-      nt.onkeyup = function(){
-        updateStorage();
+      nt.onKeyUp = function(){
+        saveStorage()
       }
     })
   }
-})
+}
 
-document.addEventListener("keydown", event =>{
-  if(event.key === "Enter"){
-    document.execCommand("insertLineBreak");
-    event.preventDefault();
+// linebreaker function
+function lineBreaker() {
+  if (onkeydown === 'Enter'){
+    document.execCommand('insertLineBreak');
   }
-})
+}
 
 function App() {
   return (
@@ -76,9 +68,9 @@ function App() {
       <title>Notes-app</title>
       <div className='container'>
         <h1>Notes</h1>
-        <button className='btn'>create notes</button>
+        <button className='create-button' onClick={createNote()}>create notes</button>
         <div className='notes-container'>
-          <p contentEditable='true' className="input-box"><img src='IMG/delete.png' onClick={notesContainer}></img></p>
+          <p contentEditable='true' className='input-box'><button className='delete-button' onClick={deleteNote}><img src='IMG/delete.png' /></button></p>
         </div>
       </div>
     </div>
