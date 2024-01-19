@@ -18,16 +18,26 @@ function createNote() {
   let inputBox = document.createElement('p');
   inputBox.className = 'input-box';
   inputBox.setAttribute('contenteditable', 'true');
+  let deleteButton = document.createElement('button');
+  deleteButton.className = 'delete-button';
+  deleteButton.onclick = function () {
+    deleteNote(inputBox);
+  };
   let img = document.createElement('img');
   img.src = 'IMG/delete.png';
+  img.alt = 'Delete';
+  deleteButton.appendChild(img);
+  inputBox.appendChild(deleteButton);
+  document.getElementById('notes-container').appendChild(inputBox);
 }
 
-// a note-block deletion function
-function deleteNote() {
-  
+// a delete note function
+function deleteNote(noteElement) {
+  let notesContainer = document.getElementById('notes-container');
+  notesContainer.removeChild(noteElement);
 }
 
-// local-storage  function
+// local-storage function
 function manageNotes(){
   localStorage.setItem('notes', notesContainer.innerHTML);
   if (notesContainer.innerHTML === null) {
@@ -63,16 +73,18 @@ function lineBreaker() {
 function App() {
   return (
     <div>
-      <meta name='viewport' content='width=device-width, initial-scale=1.0' />
-      <title>Notes-app</title>
-      <div className='container'>
-        <h1 className='notes'>Notes</h1>
-        <button className='create-button' onClick={createNote()}>create notes</button>
-        <div className='notes-container'>
-          <p contentEditable='true' className='input-box'><button className='delete-button' onClick={deleteNote}><img src='IMG/delete.png' /></button></p>
-        </div>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <title>Notes-app</title>
+    <div className='container'>
+      <h1 className='notes'>Notes</h1>
+      <button className='create-button' onClick={createNote}>create notes</button>
+      <div className='notes-container' id='notes-container'>
+        <p contentEditable='true' className='input-box'>
+          <button className='delete-button' onClick={deleteNote}><img src='IMG/delete.png' alt='Delete' /></button>
+        </p>
       </div>
     </div>
+  </div>
   );
 }
 
