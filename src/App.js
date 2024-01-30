@@ -15,20 +15,35 @@ const notesContainer = document.querySelector('notes-container')
 
 // a note-block creation function:
 function createNote() {
-  let inputBox = document.createElement('p');
-  inputBox.className = 'input-box';
-  inputBox.setAttribute('contenteditable', 'true');
+  let noteContainer = document.createElement('div');
+  noteContainer.className = 'note-block';
+
+  let noteContent = document.createElement('p');
+  noteContent.className = 'note-content';
+  noteContent.setAttribute('contenteditable', 'true');
+
   let deleteButton = document.createElement('button');
   deleteButton.className = 'delete-button';
   deleteButton.onclick = function () {
-    deleteNote(inputBox);
+    deleteNote(noteContainer);
   };
-  let img = document.createElement('img');
-  img.src = 'IMG/delete.png';
-  img.alt = 'Delete';
-  deleteButton.appendChild(img);
-  inputBox.appendChild(deleteButton);
-  document.getElementById('notes-container').appendChild(inputBox);
+  let deleteImg = document.createElement('img');
+  deleteImg.src = 'IMG/delete.png';
+  deleteImg.alt = 'Delete';
+  deleteButton.appendChild(deleteImg);
+
+  let saveButton = document.createElement('button');
+  saveButton.className = 'save-button';
+  saveButton.onclick = function () {
+    saveNotes(noteContainer);
+  };
+  saveButton.textContent = 'Save';
+
+  noteContainer.appendChild(noteContent);
+  noteContainer.appendChild(deleteButton);
+  noteContainer.appendChild(saveButton);
+
+  document.getElementById('notes-container').appendChild(noteContainer);
 }
 
 // a delete note function
@@ -47,26 +62,14 @@ function manageNotes(){
 }
 
 // save function
-function saveNotes(e) {
-  if (e.target.tagnName === 'img'){
-    e.target.parentElement.remove();
-    manageNotes()
-  }
-  else if (e.target.tagnName === 'p'){
-    notes = document.querySelector('.input-box');
-    notes.forEach(nt => {
-      nt.onKeyUp = function(){
-        manageNotes()
-      }
-    })
-  }
-}
+function saveNotes(noteContainer) {
+  let noteInput = noteContainer.querySelector('.note-content').textContent.trim();
 
-// linebreaker function
-function lineBreaker() {
-  if (Event === 'Enter'){
-    document.execCommand('insertLineBreak');
-    Event.preventDefault();
+  if (noteInput !== '') {
+    localStorage.setItem('notes', noteInput);
+    alert('Note saved successfully!');
+  } else {
+    alert('Please enter a note.');
   }
 }
 
@@ -79,9 +82,9 @@ function App() {
       <h1 className='notes'>Notes</h1>
       <button className='create-button' onClick={createNote}>create notes</button>
       <div className='notes-container' id='notes-container'>
-        <p contentEditable='true' className='input-box'>
-          <button className='delete-button' onClick={deleteNote}><img src='IMG/delete.png' alt='Delete' /></button>
-        </p>
+        <p contentEditable='true' className='input-box' id="noteInput" onChange={manageNotes}></p>
+        <button className='delete-button' onClick={deleteNote}><img src='IMG/delete.png' alt='Delete' /></button>
+        <button className='save-button' onclick={saveNotes}>Save</button>
       </div>
     </div>
   </div>
