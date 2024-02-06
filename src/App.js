@@ -1,6 +1,9 @@
 import React from "react";
 import "./App.css";
 
+
+function App() {
+  
 // (Grouped by the following:
 //   A create note-block function
 //   A delete note-block function
@@ -52,18 +55,9 @@ function deleteNote(noteElement) {
   notesContainer.removeChild(noteElement);
 }
 
-// local-storage function
-function manageNotes(){
-  localStorage.setItem('notes', notesContainer.innerHTML);
-  if (notesContainer.innerHTML === null) {
-    return notesContainer;
-   }else {notesContainer.innerHTML = localStorage.getItem('notes')
-  }
-}
-
-// save function
+// a save function
 function saveNotes(noteContainer) {
-  let noteInput = noteContainer.querySelector('.note-content').textContent.trim();
+  let noteInput = noteContainer.querySelector('.note-content').textContent.trim();;
 
   if (noteInput !== '') {
     localStorage.setItem('notes', noteInput);
@@ -73,18 +67,62 @@ function saveNotes(noteContainer) {
   }
 }
 
-function App() {
+// a local-storage load function
+function loadLocal() {
+  var notes = localStorage.getItem('notes');
+
+    var notesContainer = document.getElementById('notes-container');
+    var storedNotes = notes.split('|'); 
+
+    storedNotes.forEach(function(noteText) {
+      var noteContainer = document.createElement('div');
+      noteContainer.className = 'note-block';
+
+      var noteContent = document.createElement('p');
+      noteContent.className = 'note-content';
+      noteContent.setAttribute('contenteditable', 'true');
+      noteContent.textContent = noteText; // Set the note text
+
+      var deleteButton = document.createElement('button');
+      deleteButton.className = 'delete-button';
+      deleteButton.onclick = function() {
+        deleteNote(noteContainer);
+      };
+      var deleteImg = document.createElement('img');
+      deleteImg.src = 'IMG/delete.png';
+      deleteImg.alt = 'Delete';
+      deleteButton.appendChild(deleteImg);
+
+      var saveButton = document.createElement('button');
+      saveButton.className = 'save-button';
+      saveButton.onclick = function() {
+        saveNotes(noteContainer);
+      };
+      saveButton.textContent = 'Save';
+
+      noteContainer.appendChild(noteContent);
+      noteContainer.appendChild(deleteButton);
+      noteContainer.appendChild(saveButton);
+
+      notesContainer.appendChild(noteContainer);
+    });
+}
+
+  window.onload = function () {
+    loadLocal();
+  }
+
   return (
     <div>
     <meta name='viewport' content='width=device-width, initial-scale=1.0' />
     <title>Notes-app</title>
     <div className='container'>
       <h1 className='notes'>Notes</h1>
-      <button className='create-button' onClick={createNote}>create notes</button>
+      <button className='create-button' onClick={createNote} >create notes</button>
       <div className='notes-container' id='notes-container'>
-        <p contentEditable='true' className='input-box' id="noteInput" onChange={manageNotes}></p>
+        <p contentEditable='true' className='input-box' id="noteInput">Please create a note above and happy typing!</p>
         <button className='delete-button' onClick={deleteNote}><img src='IMG/delete.png' alt='Delete' /></button>
-        <button className='save-button' onclick={saveNotes}>Save</button>
+        <button className='save-button' onClick={saveNotes}>Save</button>
       </div>
     </div>
   </div>
