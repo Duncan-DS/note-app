@@ -71,11 +71,11 @@ function App() {
     <meta name='viewport' content='width=device-width, initial-scale=1.0' />
     <title>Notes-app</title>
     <div className='container'>
-      <h1 className='notes'>Notes</h1>
+      <h1 className='notes'>Note-App <img className='note-icon' src='IMG/notes icon.jpg'></img></h1>
       <button className='create-button' onClick={createNote} >create notes</button>
       <div className='notes-container' id='notes-container'>
-        <p contentEditable='true' className='input-box' id="noteInput"></p>
-        <button className='delete-button' onClick={deleteNote}><img src='IMG/delete.png' alt='Delete' /></button>
+        <p className='note-content' id="noteInput" contentEditable='true'></p>
+        <button className='delete-button' onClick={deleteNote}><img className='delete-icon' src='IMG/delete.png' alt='Delete' /></button>
       </div>
     </div>
   </div>
