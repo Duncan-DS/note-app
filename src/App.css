@@ -7,7 +7,7 @@
 .container{
   width: 100%;
   min-height: 100vh;
-  background: linear-gradient(#ad8700, white);
+  background: linear-gradient(#0f6cc9, #ad8700);
   color: #fff;
   padding-top: 4%;
   padding-left: 10%;
@@ -27,7 +27,7 @@
 .container button{
   display: flex;
   align-items: right;
-  background:	#0f6cc9;
+  background:	#ad8700;
   color: white;
   font-size: 16px;
   outline: 0;
@@ -39,7 +39,7 @@
 }
 
 .container button:hover {
-  background: #426ec4;
+  background: #66561c;
 }
 
 .note-content {

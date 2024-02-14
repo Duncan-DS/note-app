@@ -72,7 +72,7 @@ function App() {
     <title>Notes-app</title>
     <div className='container'>
       <h1 className='notes'>Note-App <img className='note-icon' src='IMG/notes icon.jpg'></img></h1>
-      <button className='create-button' onClick={createNote} >create notes</button>
+      <button className='create-button' onClick={createNote}>create notes</button>
       <div className='notes-container' id='notes-container'>
         <p className='note-content' id="noteInput" contentEditable='true'></p>
         <button className='delete-button' onClick={deleteNote}><img className='delete-icon' src='IMG/delete.png' alt='Delete' /></button>
